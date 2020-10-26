@@ -15,7 +15,13 @@
 from __future__ import annotations
 
 import firefly as ff
+import os
 
 
-class Document(ff.AggregateRoot):
+@ff.rest.crud(config={
+    'write': {
+        'scopes': [] if os.environ.get('ANONYMOUS_ACCESS', False) is True else ['firefly_survey.Document.write']
+    }
+})
+class Document(ff.MetaAggregate):
     pass

@@ -15,7 +15,13 @@
 from __future__ import annotations
 
 import firefly as ff
+import os
 
 
-class Schema(ff.AggregateRoot):
+@ff.rest.crud(config={
+    'read': {
+        'scopes': [] if os.environ.get('ANONYMOUS_ACCESS', False) is True else ['firefly_survey.Read']
+    },
+})
+class Schema(ff.JsonSchema):
     pass
