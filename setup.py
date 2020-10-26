@@ -36,7 +36,7 @@ setuptools.setup(
     author_email="me@jdwilliams.xyz",
     description="Bounded context for dealing with subjective inputs from users.",
     long_description=long_description,
-    url="https://github.com/firefly-framework/firefly-iaaa",
+    url="https://github.com/firefly-framework/firefly-survey",
     packages=setuptools.PEP420PackageFinder.find('src'),
     package_dir={'': 'src'},
     install_requires=[
