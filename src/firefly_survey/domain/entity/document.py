@@ -20,7 +20,8 @@ import os
 
 @ff.rest.crud(config={
     'write': {
-        'scopes': [] if os.environ.get('ANONYMOUS_ACCESS', False) is True else ['firefly_survey.Document.write']
+        'scopes': [] if os.environ.get('ANONYMOUS_ACCESS', 'false') in (True, 'true', 1, '1')
+        else ['firefly_survey.Document.write']
     }
 })
 class Document(ff.MetaAggregate):
