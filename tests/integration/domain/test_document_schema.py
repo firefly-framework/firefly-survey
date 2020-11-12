@@ -45,5 +45,5 @@ def test_simple_survey(registry, container):
     documents.commit()
 
     assert document.question_1 is True
-    result = validator.validate(document)
+    result = validator.validate(document, against=schema)
     assert result['count'] == 0

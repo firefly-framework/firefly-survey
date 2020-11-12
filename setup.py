@@ -31,7 +31,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='firefly-survey',
-    version='0.1.3',
+    version='0.1.4',
     author="JD Williams",
     author_email="me@jdwilliams.xyz",
     description="Bounded context for dealing with subjective inputs from users.",
@@ -40,7 +40,7 @@ setuptools.setup(
     packages=setuptools.PEP420PackageFinder.find('src'),
     package_dir={'': 'src'},
     install_requires=[
-        'firefly-framework>=1.1.0',
+        'firefly-framework>=1.1.10',
     ],
     classifiers=[
         "Programming Language :: Python :: 3.7",

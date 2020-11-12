@@ -12,4 +12,27 @@
 #  You should have received a copy of the GNU General Public License along with Firefly. If not, see
 #  <http://www.gnu.org/licenses/>.
 
-from .create_document import CreateDocument
+from __future__ import annotations
+
+import os
+
+import firefly as ff
+import firefly_survey.domain as domain
+
+scopes = [] if os.environ.get('ANONYMOUS_ACCESS', 'false') in (True, 'true', 1, '1') else [
+    'firefly_survey.Document.write']
+
+
+@ff.rest('/documents', method='POST', scopes=scopes)
+class CreateDocument(ff.ApplicationService):
+    _registry: ff.Registry = None
+
+    def __call__(self, schema: str, data: dict, **kwargs):
+        schemas = self._registry(domain.Schema)
+        documents = self._registry(domain.Document)
+
+        schema = schemas.find(schema)
+        if schema is None:
+            raise ff.NotFound()
+
+        documents.append(domain.Document(schema=schema, data=data))
