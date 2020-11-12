@@ -19,11 +19,10 @@ import os
 import firefly as ff
 import firefly_survey.domain as domain
 
-scopes = [] if os.environ.get('ANONYMOUS_ACCESS', 'false') in (True, 'true', 1, '1') else [
-    'firefly_survey.Document.write']
+secured = False if os.environ.get('ANONYMOUS_ACCESS', 'false') in (True, 'true', 1, '1') else True
 
 
-@ff.rest('/documents', method='POST', scopes=scopes)
+@ff.rest('/documents', method='POST', secured=secured)
 class CreateDocument(ff.ApplicationService):
     _registry: ff.Registry = None
 
@@ -32,6 +31,7 @@ class CreateDocument(ff.ApplicationService):
         documents = self._registry(domain.Document)
 
         schema = schemas.find(schema)
+        print(schema)
         if schema is None:
             raise ff.NotFound()
 

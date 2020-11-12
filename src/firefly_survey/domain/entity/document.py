@@ -17,6 +17,6 @@ from __future__ import annotations
 import firefly as ff
 
 
-@ff.rest.crud()
+@ff.rest.crud(exclude=['create'])
 class Document(ff.MetaAggregate):
     pass

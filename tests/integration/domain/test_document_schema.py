@@ -11,11 +11,14 @@
 #
 #  You should have received a copy of the GNU General Public License along with Firefly. If not, see
 #  <http://www.gnu.org/licenses/>.
+import os
 
 import firefly_survey.domain as domain
 
 
-def test_simple_survey(registry, container):
+async def test_simple_survey(client, registry, container, serializer):
+    os.environ['ANONYMOUS_ACCESS'] = 'true'
+
     validator = container.validator
     schemas = registry(domain.Schema)
     documents = registry(domain.Document)
@@ -38,11 +41,14 @@ def test_simple_survey(registry, container):
     schemas.append(schema)
     schemas.commit()
 
-    document = domain.Document(schema=schema, data={
-        'question_1': True,
-    })
-    documents.append(document)
-    documents.commit()
+    await client.post('/firefly-survey/documents', data=serializer.serialize({
+        'data': {
+            'question_1': True,
+        },
+        'schema': schema.id,
+    }))
+
+    document = documents[0]
 
     assert document.question_1 is True
     result = validator.validate(document, against=schema)
