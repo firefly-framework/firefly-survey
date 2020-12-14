@@ -14,12 +14,14 @@
 
 from __future__ import annotations
 
+import importlib
 import os
 
 import firefly as ff
-import firefly_survey.domain as domain
 
 secured = False if os.environ.get('ANONYMOUS_ACCESS', 'false') in (True, 'true', 1, '1') else True
+
+domain = importlib.import_module(f'{os.environ.get("CONTEXT")}.domain')
 
 
 @ff.rest('/documents', method='POST', secured=secured)
