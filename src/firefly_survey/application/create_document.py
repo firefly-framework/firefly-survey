@@ -31,8 +31,10 @@ class CreateDocument(ff.ApplicationService):
         documents = self._registry(domain.Document)
 
         schema = schemas.find(schema)
-        print(schema)
         if schema is None:
             raise ff.NotFound()
 
-        documents.append(domain.Document(schema=schema, data=data))
+        params = {'schema': schema, 'data': data}
+        params.update(kwargs)
+
+        documents.append(domain.Document.from_dict(params))
