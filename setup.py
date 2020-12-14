@@ -31,7 +31,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='firefly-survey',
-    version='0.1.7',
+    version='0.1.8',
     author="JD Williams",
     author_email="me@jdwilliams.xyz",
     description="Bounded context for dealing with subjective inputs from users.",

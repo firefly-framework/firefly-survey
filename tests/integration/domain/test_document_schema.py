@@ -12,6 +12,7 @@
 #  You should have received a copy of the GNU General Public License along with Firefly. If not, see
 #  <http://www.gnu.org/licenses/>.
 import os
+from datetime import datetime
 
 import firefly_survey.domain as domain
 
@@ -51,5 +52,6 @@ async def test_simple_survey(client, registry, container, serializer):
     document = documents[0]
 
     assert document.question_1 is True
+    assert isinstance(document.created_on, datetime)
     result = validator.validate(document, against=schema)
     assert result['count'] == 0

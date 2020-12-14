@@ -14,9 +14,11 @@
 
 from __future__ import annotations
 
+from datetime import datetime
+
 import firefly as ff
 
 
 @ff.rest.crud(exclude=['create'])
 class Document(ff.MetaAggregate):
-    pass
+    created_on: datetime = ff.now()
